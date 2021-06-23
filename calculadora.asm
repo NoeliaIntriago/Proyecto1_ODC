@@ -52,6 +52,8 @@ main:
 	sgt $t1, $s1, 0  #validacion de si el sueldo ingresado es mayor al SBU
 	beq $t1, $zero, ErrorSueldo
 	
+	move $a1, $s0
+	move $a2, $s1
 	jal condiciones
 	move $s2, $v0
 	
