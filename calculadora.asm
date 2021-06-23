@@ -8,6 +8,7 @@ hijos: .asciiz "Ingrese la cantidad de hijos: "
 errorDelSueldo: .asciiz "Error, el sueldo ingresado no es mayor al SBU. Ingrese uno mayor"
 errorDeHijos: .asciiz "Error, el numero de hijos tiene que ser mayor a 0"
 printFinal: .asciiz "Gracias por usar nuestro servicio. Hasta pronto :)"
+resultado: .asciiz "La pensión alimenticia a pagar es: $"
 newLine: .asciiz "\n"
 texto: .space len
 
@@ -24,7 +25,6 @@ launch:
 	j main
 
 main:
-
 	li $v0, 4
 	la $a0, sueldo
 	syscall
@@ -33,7 +33,6 @@ main:
 	li $a1, len
 	syscall
 	la $a0, newLine 
-	
 	
 	move $s0, $v0   #moviendo el valor de sueldo ingresado
 	sgt $t1, $s0, 410  #validacion de si el sueldo ingresado es mayor al SBU
@@ -51,7 +50,17 @@ main:
 	
 	move $s1, $v0   #moviendo el valor de hijos ingresado
 	sgt $t1, $s1, 0  #validacion de si el sueldo ingresado es mayor al SBU
-	beq $t1, $zero, ErrorSueldo 	
+	beq $t1, $zero, ErrorSueldo
+	
+	jal condiciones
+	move $s2, $v0
+	
+	li $v0, 4
+	la $a0, resultado
+	li $v0, 1
+	la $a0, ($s2)
+	syscall
+	
 	j fin
 
 ErrorSueldo:
