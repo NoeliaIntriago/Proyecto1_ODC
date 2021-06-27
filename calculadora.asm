@@ -68,8 +68,6 @@ main:
 	sgt $t1, $s1, 0  #validacion de si el sueldo ingresado es mayor al SBU
 	beq $t1, $zero, ErrorSueldo
 	
-	move $a1, $s0
-	move $a2, $s1
 	jal condiciones
 	move $s2, $v0
 	
@@ -106,8 +104,8 @@ ErrorHijos:
 condiciones:
 	addi $sp, $sp, -12
 	sw $ra, ($sp)
-	sw $a1, 4($sp)
-	sw $a2, 8($sp)
+	sw $s0, 4($sp)
+	sw $s1, 8($sp)
 
 	bgt $s0, 3690, sueldo_3690
 	bgt $s0, 2665, sueldo_2665
@@ -119,85 +117,84 @@ condiciones:
 	sueldo_3690:
 		l.d $f2, sueldo6
 		l.d $f4, porcentaje6
-		mtc1 $a0, $f0
+		mtc1 $s0, $f0
 		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
 		mul.d $f2, $f2, $f4
-		move $v0, $a0
+		mov.d $f0, $f2
 
 	sueldo_2665:
 		l.d $f2, sueldo5
 		l.d $f4, porcentaje5
-		mtc1 $a0, $f0
+		mtc1 $s0, $f0
 		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
 		mul.d $f2, $f2, $f4 
-		move $v0, $a0
+		mov.d $f0, $f2
 
 	sueldo_1640:
 		l.d $f2, sueldo4
 		l.d $f4, porcentaje4
-		mtc1 $a0, $f0
+		mtc1 $s0, $f0
 		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
 		mul.d $f2, $f2, $f4
-		move $v0, $a0
+		mov.d $f0, $f2
 
 	sueldo_1230:
 		l.d $f2, sueldo3
 		l.d $f4, porcentaje3
-		mtc1 $a0, $f0
+		mtc1 $s0, $f0
 		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
 		mul.d $f2, $f2, $f4
-		move $v0, $a0
+		mov.d $f0, $f2
 
 	sueldo_512:
 		l.d $f12, sueldo2
-		mtc1 $a0, $f0
+		mtc1 $s0, $f0
 		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
-		beq $a2, 1, hijos1_512
-		bge $a2, 2, hijos2_512
+		beq $s1, 1, hijos1_512
+		bge $s1, 2, hijos2_512
 
 		hijos1_512:
 			l.d $f4, porcentaje2_1
 			mul.d $f2, $f2, $f4
-			move $v0, $a0
+			mov.d $f0, $f2
 		hijos2_512: 
 			l.d $f4, porcentaje2_2
 			mul.d $f2, $f2, $f4
-			move $v0, $a0
+			mov.d $f0, $f2
 
 	sueldo_410:
    		l.d $f2, sueldo1
-		mtc1 $a0, $f0
+		mtc1 $s0, $f0
 		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
-		beq $a2, 1, hijos1_410
-		beq $a2, 2, hijos2_410
-		bge $a2, 3, hijos3_410
+		beq $s1, 1, hijos1_410
+		beq $s1, 2, hijos2_410
+		bge $s1, 3, hijos3_410
 
 		hijos1_410:
 			l.d $f4, porcentaje1_1
 			mul.d $f2, $f2, $f4
-			move $v0, $a0
+			mov.d $f0, $f2
 		hijos2_410: 
 			l.d $f4, porcentaje1_2
 			mul.d $f2, $f2, $f4
-			move $v0, $a0
+			mov.d $f0, $f2
    		hijos3_410:
    			l.d $f4, porcentaje1_3
    			mul.d $f2, $f2, $f4
-   			move $v0, $a0
+   			mov.d $f0, $f2
    	
-	lw $a2, 8($sp)
-	lw $a1, 4($sp)   	
+	lw $s1, 8($sp)
+	lw $s0, 4($sp)   	
 	lw $ra, ($sp)
 	addi $sp, $sp, 12
 
 	jr $ra
-
 
 fin: 
 	li $v0, 4
