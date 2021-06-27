@@ -69,13 +69,13 @@ main:
 	beq $t1, $zero, ErrorSueldo
 	
 	jal condiciones
-	move $s2, $v0
+	mov.d $f12, $f12
 	
 	li $v0, 4
 	la $a0, resultado
 	syscall
-	li $v0, 1
-	la $a0, ($s2)
+	li $v0, 3
+	mov.d $f12, $f0
 	syscall
 	li $v0, 4
 	la $a0, newLine
@@ -102,58 +102,70 @@ ErrorHijos:
 	j main
 	
 condiciones:
-	addi $sp, $sp, -12
+	addi $sp, $sp, -4
 	sw $ra, ($sp)
-	sw $s0, 4($sp)
-	sw $s1, 8($sp)
-
+	
+	mtc1.d $s0, $f0
+	mtc1.d $s1, $f2
+	
+	cvt.d.w $f0, $f0 #VALOR SUELDO
+	cvt.d.w $f2, $f2 #VALOR HIJOS
+	
 	bgt $s0, 3690, sueldo_3690
 	bgt $s0, 2665, sueldo_2665
 	bgt $s0, 1640, sueldo_1640
 	bgt $s0, 1230, sueldo_1230
 	bgt $s0, 512, sueldo_512
 	bgt $s0, 410, sueldo_410
-
+	
 	sueldo_3690:
-		l.d $f2, sueldo6
-		l.d $f4, porcentaje6
-		mtc1 $s0, $f0
-		cvt.d.w $f0, $f0
-		mul.d $f2, $f2, $f0
-		mul.d $f2, $f2, $f4
-		mov.d $f0, $f2
+		l.d $f6, porcentaje6
+		mul.d $f8, $f6, $f0
+		mov.d $f0, $f8
+		
+		lw $ra, ($sp)
+		addi $sp, $sp, 4 
+
+		jr $ra
 
 	sueldo_2665:
 		l.d $f2, sueldo5
 		l.d $f4, porcentaje5
-		mtc1 $s0, $f0
-		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
 		mul.d $f2, $f2, $f4 
 		mov.d $f0, $f2
+		
+		lw $ra, ($sp)
+		addi $sp, $sp, 4 
+
+		jr $ra
 
 	sueldo_1640:
 		l.d $f2, sueldo4
 		l.d $f4, porcentaje4
-		mtc1 $s0, $f0
-		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
 		mul.d $f2, $f2, $f4
 		mov.d $f0, $f2
+		
+		lw $ra, ($sp)
+		addi $sp, $sp, 4 
+
+		jr $ra
 
 	sueldo_1230:
 		l.d $f2, sueldo3
 		l.d $f4, porcentaje3
-		mtc1 $s0, $f0
-		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
 		mul.d $f2, $f2, $f4
 		mov.d $f0, $f2
+		
+		lw $ra, ($sp)
+		addi $sp, $sp, 4 
+		
+		jr $ra
 
 	sueldo_512:
 		l.d $f12, sueldo2
-		mtc1 $s0, $f0
-		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
 		beq $s1, 1, hijos1_512
 		bge $s1, 2, hijos2_512
@@ -162,15 +174,23 @@ condiciones:
 			l.d $f4, porcentaje2_1
 			mul.d $f2, $f2, $f4
 			mov.d $f0, $f2
+			
+			lw $ra, ($sp)
+			addi $sp, $sp, 4 
+		
+			jr $ra
 		hijos2_512: 
 			l.d $f4, porcentaje2_2
 			mul.d $f2, $f2, $f4
 			mov.d $f0, $f2
+			
+			lw $ra, ($sp)
+			addi $sp, $sp, 4 
 
+			jr $ra
+		
 	sueldo_410:
    		l.d $f2, sueldo1
-		mtc1 $s0, $f0
-		cvt.d.w $f0, $f0
 		mul.d $f2, $f2, $f0
 		beq $s1, 1, hijos1_410
 		beq $s1, 2, hijos2_410
@@ -180,21 +200,29 @@ condiciones:
 			l.d $f4, porcentaje1_1
 			mul.d $f2, $f2, $f4
 			mov.d $f0, $f2
+			
+			lw $ra, ($sp)
+			addi $sp, $sp, 4 
+
+			jr $ra
 		hijos2_410: 
 			l.d $f4, porcentaje1_2
 			mul.d $f2, $f2, $f4
 			mov.d $f0, $f2
+			
+			lw $ra, ($sp)
+			addi $sp, $sp, 4 
+
+			jr $ra
    		hijos3_410:
    			l.d $f4, porcentaje1_3
    			mul.d $f2, $f2, $f4
    			mov.d $f0, $f2
-   	
-	lw $s1, 8($sp)
-	lw $s0, 4($sp)   	
-	lw $ra, ($sp)
-	addi $sp, $sp, 12
+   			 	
+			lw $ra, ($sp)
+			addi $sp, $sp, 4 
 
-	jr $ra
+			jr $ra
 
 fin: 
 	li $v0, 4
