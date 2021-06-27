@@ -1,11 +1,5 @@
 .data
-sueldo1: .double 410.00
-sueldo2: .double 512.50
-sueldo3: .double 1230.00
-sueldo4: .double 1640.00
-sueldo5: .double 2665.00
-sueldo6: .double 3690.00
-
+#Valores de porcentaje respecto a valores ingresados de sueldo y cantidad de hijos
 porcentaje1_1: .double 0.5218
 porcentaje1_2: .double 0.3971
 porcentaje1_3: .double 0.2812
@@ -65,12 +59,13 @@ main:
 	la $a0, newLine
 	
 	move $s1, $v0   #moviendo el valor de hijos ingresado
-	sgt $t1, $s1, 0  #validacion de si el sueldo ingresado es mayor al SBU
+	sgt $t1, $s1, 0  #validacion de si la cantidad de hijos es mayor a 0
 	beq $t1, $zero, ErrorSueldo
 	
 	jal condiciones
 	mov.d $f12, $f12
 	
+	#presentación de resultado final
 	li $v0, 4
 	la $a0, resultado
 	syscall
@@ -105,18 +100,19 @@ condiciones:
 	addi $sp, $sp, -4
 	sw $ra, ($sp)
 	
+	#movimiento y conversión de datos a flotantes
 	mtc1.d $s0, $f0
 	mtc1.d $s1, $f2
 	
 	cvt.d.w $f0, $f0 #VALOR SUELDO
 	cvt.d.w $f2, $f2 #VALOR HIJOS
 	
-	bgt $s0, 3690, sueldo_3690
-	bgt $s0, 2665, sueldo_2665
-	bgt $s0, 1640, sueldo_1640
-	bgt $s0, 1230, sueldo_1230
-	bgt $s0, 512, sueldo_512
-	bgt $s0, 410, sueldo_410
+	bgt $s0, 3690, sueldo_3690 #si el sueldo es mayor a 3690
+	bgt $s0, 2665, sueldo_2665 #si el sueldo es mayor a 2665
+	bgt $s0, 1640, sueldo_1640 #si el sueldo es mayor a 1640
+	bgt $s0, 1230, sueldo_1230 #si el sueldo es mayor a 1230
+	bgt $s0, 512, sueldo_512   #si el sueldo es mayor a 512
+	bgt $s0, 410, sueldo_410   #si el sueldo es mayor a 410
 	
 	sueldo_3690:
 		l.d $f6, porcentaje6
