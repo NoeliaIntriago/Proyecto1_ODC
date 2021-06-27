@@ -75,8 +75,12 @@ main:
 	
 	li $v0, 4
 	la $a0, resultado
+	syscall
 	li $v0, 1
 	la $a0, ($s2)
+	syscall
+	li $v0, 4
+	la $a0, newLine
 	syscall
 	
 	j fin
