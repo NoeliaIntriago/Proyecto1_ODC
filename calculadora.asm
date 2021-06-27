@@ -125,103 +125,87 @@ condiciones:
 		
 		lw $ra, ($sp)
 		addi $sp, $sp, 4 
-
 		jr $ra
 
 	sueldo_2665:
-		l.d $f2, sueldo5
-		l.d $f4, porcentaje5
-		mul.d $f2, $f2, $f0
-		mul.d $f2, $f2, $f4 
-		mov.d $f0, $f2
+		l.d $f6, porcentaje5
+		mul.d $f8, $f6, $f0
+		mov.d $f0, $f8
 		
 		lw $ra, ($sp)
 		addi $sp, $sp, 4 
-
 		jr $ra
 
 	sueldo_1640:
-		l.d $f2, sueldo4
-		l.d $f4, porcentaje4
-		mul.d $f2, $f2, $f0
-		mul.d $f2, $f2, $f4
-		mov.d $f0, $f2
+		l.d $f6, porcentaje4
+		mul.d $f8, $f6, $f0
+		mov.d $f0, $f8
 		
 		lw $ra, ($sp)
 		addi $sp, $sp, 4 
-
 		jr $ra
 
 	sueldo_1230:
-		l.d $f2, sueldo3
-		l.d $f4, porcentaje3
-		mul.d $f2, $f2, $f0
-		mul.d $f2, $f2, $f4
-		mov.d $f0, $f2
+		l.d $f6, porcentaje3
+		mul.d $f8, $f6, $f0
+		mov.d $f0, $f8
 		
 		lw $ra, ($sp)
 		addi $sp, $sp, 4 
-		
 		jr $ra
 
 	sueldo_512:
-		l.d $f12, sueldo2
-		mul.d $f2, $f2, $f0
 		beq $s1, 1, hijos1_512
 		bge $s1, 2, hijos2_512
 
 		hijos1_512:
-			l.d $f4, porcentaje2_1
-			mul.d $f2, $f2, $f4
-			mov.d $f0, $f2
+			l.d $f6, porcentaje2_1
+			mul.d $f8, $f6, $f0
+			mov.d $f0, $f8
 			
 			lw $ra, ($sp)
 			addi $sp, $sp, 4 
-		
 			jr $ra
+			
 		hijos2_512: 
-			l.d $f4, porcentaje2_2
-			mul.d $f2, $f2, $f4
-			mov.d $f0, $f2
+			l.d $f6, porcentaje2_2
+			mul.d $f8, $f6, $f0
+			mov.d $f0, $f8
 			
 			lw $ra, ($sp)
 			addi $sp, $sp, 4 
-
 			jr $ra
 		
 	sueldo_410:
-   		l.d $f2, sueldo1
-		mul.d $f2, $f2, $f0
 		beq $s1, 1, hijos1_410
 		beq $s1, 2, hijos2_410
 		bge $s1, 3, hijos3_410
 
 		hijos1_410:
-			l.d $f4, porcentaje1_1
-			mul.d $f2, $f2, $f4
-			mov.d $f0, $f2
+			l.d $f6, porcentaje1_1
+			mul.d $f8, $f6, $f0
+			mov.d $f0, $f8
 			
 			lw $ra, ($sp)
 			addi $sp, $sp, 4 
-
 			jr $ra
+			
 		hijos2_410: 
-			l.d $f4, porcentaje1_2
-			mul.d $f2, $f2, $f4
-			mov.d $f0, $f2
+			l.d $f6, porcentaje1_2
+			mul.d $f8, $f6, $f0
+			mov.d $f0, $f8
 			
 			lw $ra, ($sp)
 			addi $sp, $sp, 4 
-
 			jr $ra
+			
    		hijos3_410:
-   			l.d $f4, porcentaje1_3
-   			mul.d $f2, $f2, $f4
-   			mov.d $f0, $f2
+   			l.d $f6, porcentaje1_3
+   			mul.d $f8, $f6, $f0
+   			mov.d $f0, $f8
    			 	
 			lw $ra, ($sp)
 			addi $sp, $sp, 4 
-
 			jr $ra
 
 fin: 
