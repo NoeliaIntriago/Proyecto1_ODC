@@ -69,7 +69,7 @@ main:
 	
 	move $s1, $v0   #moviendo el valor de hijos ingresado
 	sgt $t1, $s1, 0  #validacion de si la cantidad de hijos es mayor a 0
-	beq $t1, $zero, ErrorSueldo
+	beq $t1, $zero, ErrorHijos
 	
 	jal condiciones
 	mov.d $f12, $f12
